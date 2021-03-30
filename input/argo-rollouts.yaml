@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.0
   name: analysisruns.argoproj.io
 spec:
   additionalPrinterColumns:
@@ -41,6 +41,13 @@ spec:
                     type: string
                   valueFrom:
                     properties:
+                      fieldRef:
+                        properties:
+                          fieldPath:
+                            type: string
+                        required:
+                        - fieldPath
+                        type: object
                       secretKeyRef:
                         properties:
                           key:
@@ -81,6 +88,15 @@ spec:
                     type: string
                   provider:
                     properties:
+                      datadog:
+                        properties:
+                          interval:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
+                        type: object
                       job:
                         properties:
                           metadata:
@@ -2053,6 +2069,8 @@ spec:
                                           fsGroup:
                                             format: int64
                                             type: integer
+                                          fsGroupChangePolicy:
+                                            type: string
                                           runAsGroup:
                                             format: int64
                                             type: integer
@@ -2678,6 +2696,15 @@ spec:
                         - scopes
                         - storageAccountName
                         - threshold
+                        type: object
+                      newRelic:
+                        properties:
+                          profile:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
                         type: object
                       prometheus:
                         properties:
@@ -2814,7 +2841,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.0
   name: analysistemplates.argoproj.io
 spec:
   group: argoproj.io
@@ -2846,6 +2873,13 @@ spec:
                     type: string
                   valueFrom:
                     properties:
+                      fieldRef:
+                        properties:
+                          fieldPath:
+                            type: string
+                        required:
+                        - fieldPath
+                        type: object
                       secretKeyRef:
                         properties:
                           key:
@@ -2886,6 +2920,15 @@ spec:
                     type: string
                   provider:
                     properties:
+                      datadog:
+                        properties:
+                          interval:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
+                        type: object
                       job:
                         properties:
                           metadata:
@@ -4858,6 +4901,8 @@ spec:
                                           fsGroup:
                                             format: int64
                                             type: integer
+                                          fsGroupChangePolicy:
+                                            type: string
                                           runAsGroup:
                                             format: int64
                                             type: integer
@@ -5484,6 +5529,15 @@ spec:
                         - storageAccountName
                         - threshold
                         type: object
+                      newRelic:
+                        properties:
+                          profile:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
+                        type: object
                       prometheus:
                         properties:
                           address:
@@ -5547,7 +5601,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.0
   name: clusteranalysistemplates.argoproj.io
 spec:
   group: argoproj.io
@@ -5579,6 +5633,13 @@ spec:
                     type: string
                   valueFrom:
                     properties:
+                      fieldRef:
+                        properties:
+                          fieldPath:
+                            type: string
+                        required:
+                        - fieldPath
+                        type: object
                       secretKeyRef:
                         properties:
                           key:
@@ -5619,6 +5680,15 @@ spec:
                     type: string
                   provider:
                     properties:
+                      datadog:
+                        properties:
+                          interval:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
+                        type: object
                       job:
                         properties:
                           metadata:
@@ -7591,6 +7661,8 @@ spec:
                                           fsGroup:
                                             format: int64
                                             type: integer
+                                          fsGroupChangePolicy:
+                                            type: string
                                           runAsGroup:
                                             format: int64
                                             type: integer
@@ -8217,6 +8289,15 @@ spec:
                         - storageAccountName
                         - threshold
                         type: object
+                      newRelic:
+                        properties:
+                          profile:
+                            type: string
+                          query:
+                            type: string
+                        required:
+                        - query
+                        type: object
                       prometheus:
                         properties:
                           address:
@@ -8280,7 +8361,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.0
   name: experiments.argoproj.io
 spec:
   additionalPrinterColumns:
@@ -8321,6 +8402,13 @@ spec:
                           type: string
                         valueFrom:
                           properties:
+                            fieldRef:
+                              properties:
+                                fieldPath:
+                                  type: string
+                              required:
+                              - fieldPath
+                              type: object
                             secretKeyRef:
                               properties:
                                 key:
@@ -10308,6 +10396,8 @@ spec:
                               fsGroup:
                                 format: int64
                                 type: integer
+                              fsGroupChangePolicy:
+                                type: string
                               runAsGroup:
                                 format: int64
                                 type: integer
@@ -10954,7 +11044,7 @@ apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.2.5
+    controller-gen.kubebuilder.io/version: v0.4.0
   name: rollouts.argoproj.io
 spec:
   additionalPrinterColumns:
@@ -10967,13 +11057,11 @@ spec:
     name: Current
     type: integer
   - JSONPath: .status.updatedReplicas
-    description: Total number of non-terminated pods targeted by this rollout that
-      have the desired template spec
+    description: Total number of non-terminated pods targeted by this rollout that have the desired template spec
     name: Up-to-date
     type: integer
   - JSONPath: .status.availableReplicas
-    description: Total number of available pods (ready for at least minReadySeconds)
-      targeted by this rollout
+    description: Total number of available pods (ready for at least minReadySeconds) targeted by this rollout
     name: Available
     type: integer
   group: argoproj.io
@@ -10990,6 +11078,7 @@ spec:
       labelSelectorPath: .status.selector
       specReplicasPath: .spec.replicas
       statusReplicasPath: .status.HPAReplicas
+    status: {}
   validation:
     openAPIV3Schema:
       properties:
@@ -11076,6 +11165,13 @@ spec:
                                 type: string
                               valueFrom:
                                 properties:
+                                  fieldRef:
+                                    properties:
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
                                   podTemplateHashValue:
                                     type: string
                                 type: object
@@ -11108,6 +11204,13 @@ spec:
                                 type: string
                               valueFrom:
                                 properties:
+                                  fieldRef:
+                                    properties:
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
                                   podTemplateHashValue:
                                     type: string
                                 type: object
@@ -11156,6 +11259,13 @@ spec:
                                 type: string
                               valueFrom:
                                 properties:
+                                  fieldRef:
+                                    properties:
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
                                   podTemplateHashValue:
                                     type: string
                                 type: object
@@ -11193,6 +11303,17 @@ spec:
                         requiredDuringSchedulingIgnoredDuringExecution:
                           type: object
                       type: object
+                    canaryMetadata:
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        labels:
+                          additionalProperties:
+                            type: string
+                          type: object
+                      type: object
                     canaryService:
                       type: string
                     maxSurge:
@@ -11205,6 +11326,17 @@ spec:
                       - type: integer
                       - type: string
                       x-kubernetes-int-or-string: true
+                    stableMetadata:
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        labels:
+                          additionalProperties:
+                            type: string
+                          type: object
+                      type: object
                     stableService:
                       type: string
                     steps:
@@ -11221,6 +11353,13 @@ spec:
                                       type: string
                                     valueFrom:
                                       properties:
+                                        fieldRef:
+                                          properties:
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                          - fieldPath
+                                          type: object
                                         podTemplateHashValue:
                                           type: string
                                       type: object
@@ -11256,6 +11395,13 @@ spec:
                                             type: string
                                           valueFrom:
                                             properties:
+                                              fieldRef:
+                                                properties:
+                                                  fieldPath:
+                                                    type: string
+                                                required:
+                                                - fieldPath
+                                                type: object
                                               podTemplateHashValue:
                                                 type: string
                                             type: object
@@ -11267,6 +11413,8 @@ spec:
                                       type: boolean
                                     name:
                                       type: string
+                                    requiredForCompletion:
+                                      type: boolean
                                     templateName:
                                       type: string
                                   required:
@@ -11335,6 +11483,17 @@ spec:
                                 - type: integer
                                 - type: string
                                 x-kubernetes-int-or-string: true
+                            type: object
+                          setCanaryScale:
+                            properties:
+                              matchTrafficWeight:
+                                type: boolean
+                              replicas:
+                                format: int32
+                                type: integer
+                              weight:
+                                format: int32
+                                type: integer
                             type: object
                           setWeight:
                             format: int32
@@ -13318,6 +13477,8 @@ spec:
                         fsGroup:
                           format: int64
                           type: integer
+                        fsGroupChangePolicy:
+                          type: string
                         runAsGroup:
                           format: int64
                           type: integer
@@ -13943,8 +14104,6 @@ spec:
                   - name
                   - status
                   type: object
-                stableRS:
-                  type: string
               type: object
             collisionCount:
               format: int32
@@ -13999,6 +14158,8 @@ spec:
                 - startTime
                 type: object
               type: array
+            promoteFull:
+              type: boolean
             readyReplicas:
               format: int32
               type: integer
@@ -14035,146 +14196,6 @@ metadata:
   name: argo-rollouts
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  labels:
-    app.kubernetes.io/component: rollouts-controller
-    app.kubernetes.io/name: argo-rollouts-role
-    app.kubernetes.io/part-of: argo-rollouts
-  name: argo-rollouts-role
-rules:
-- apiGroups:
-  - apps
-  resources:
-  - replicasets
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - services
-  verbs:
-  - get
-  - list
-  - watch
-  - patch
-- apiGroups:
-  - argoproj.io
-  resources:
-  - rollouts
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - patch
-- apiGroups:
-  - argoproj.io
-  resources:
-  - rollouts/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysisruns
-  - experiments
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysisruns/finalizers
-  - experiments/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysistemplates
-  - clusteranalysistemplates
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - update
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - list
-  - delete
-- apiGroups:
-  - split.smi-spec.io
-  resources:
-  - trafficsplits
-  verbs:
-  - create
-  - watch
-  - get
-  - update
-  - patch
-- apiGroups:
-  - networking.istio.io
-  resources:
-  - virtualservices
-  verbs:
-  - watch
-  - get
-  - update
-  - list
----
-apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
@@ -14189,6 +14210,7 @@ rules:
   resources:
   - rollouts
   - rollouts/scale
+  - rollouts/status
   - experiments
   - analysistemplates
   - clusteranalysistemplates
@@ -14218,6 +14240,7 @@ rules:
   resources:
   - rollouts
   - rollouts/scale
+  - rollouts/status
   - experiments
   - analysistemplates
   - clusteranalysistemplates
@@ -14266,6 +14289,42 @@ metadata:
   name: argo-rollouts-clusterrole
 rules:
 - apiGroups:
+  - argoproj.io
+  resources:
+  - rollouts
+  - rollouts/status
+  - rollouts/finalizers
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysisruns
+  - analysisruns/finalizers
+  - experiments
+  - experiments/finalizers
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - argoproj.io
+  resources:
+  - analysistemplates
+  - clusteranalysistemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - apps
   resources:
   - replicasets
@@ -14295,50 +14354,37 @@ rules:
   - list
   - watch
 - apiGroups:
-  - argoproj.io
+  - ""
   resources:
-  - rollouts
+  - pods
   verbs:
-  - get
   - list
-  - watch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods/eviction
+  verbs:
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
   - update
   - patch
 - apiGroups:
-  - argoproj.io
+  - networking.k8s.io
+  - extensions
   resources:
-  - rollouts/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysisruns
-  - experiments
+  - ingresses
   verbs:
   - create
   - get
   - list
   - watch
-  - update
   - patch
-  - delete
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysisruns/finalizers
-  - experiments/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - argoproj.io
-  resources:
-  - analysistemplates
-  - clusteranalysistemplates
-  verbs:
-  - get
-  - list
-  - watch
 - apiGroups:
   - batch
   resources:
@@ -14351,24 +14397,6 @@ rules:
   - update
   - patch
   - delete
-- apiGroups:
-  - extensions
-  resources:
-  - ingresses
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
-  - update
-  - patch
 - apiGroups:
   - networking.istio.io
   resources:
@@ -14388,29 +14416,6 @@ rules:
   - get
   - update
   - patch
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - list
-  - delete
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  labels:
-    app.kubernetes.io/component: rollouts-controller
-    app.kubernetes.io/name: argo-rollouts-role-binding
-    app.kubernetes.io/part-of: argo-rollouts
-  name: argo-rollouts-role-binding
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: argo-rollouts-role
-subjects:
-- kind: ServiceAccount
-  name: argo-rollouts
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -14466,17 +14471,9 @@ spec:
         app.kubernetes.io/name: argo-rollouts
     spec:
       containers:
-      - command:
-        - /bin/rollouts-controller
-        image: argoproj/argo-rollouts:v0.9.3
+      - image: argoproj/argo-rollouts:v0.10.2
         imagePullPolicy: Always
         name: argo-rollouts
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp
       securityContext:
         runAsNonRoot: true
       serviceAccountName: argo-rollouts
-      volumes:
-      - emptyDir: {}
-        name: tmp

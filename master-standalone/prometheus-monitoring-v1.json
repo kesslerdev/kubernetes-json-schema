@@ -1080,8 +1080,17 @@
                               "type": "string"
                             },
                             "divisor": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
                               "description": "Specifies the output format of the exposed resources, defaults to \"1\"",
-                              "type": "string"
+                              "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                              "x-kubernetes-int-or-string": true
                             },
                             "resource": {
                               "description": "Required: resource to select",
@@ -1531,6 +1540,7 @@
                       "type": "string"
                     },
                     "protocol": {
+                      "default": "TCP",
                       "description": "Protocol for port. Must be UDP, TCP, or SCTP. Defaults to \"TCP\".",
                       "type": "string"
                     }
@@ -1540,7 +1550,12 @@
                   ],
                   "type": "object"
                 },
-                "type": "array"
+                "type": "array",
+                "x-kubernetes-list-map-keys": [
+                  "containerPort",
+                  "protocol"
+                ],
+                "x-kubernetes-list-type": "map"
               },
               "readinessProbe": {
                 "description": "Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
@@ -1671,14 +1686,32 @@
                 "properties": {
                   "limits": {
                     "additionalProperties": {
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
                     },
                     "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                     "type": "object"
                   },
                   "requests": {
                     "additionalProperties": {
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
                     },
                     "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                     "type": "object"
@@ -2008,6 +2041,13 @@
           "description": "Enable access to prometheus web admin API. Defaults to the value of `false`. WARNING: Enabling the admin APIs enables mutating endpoints, to delete data, shutdown Prometheus, and more. Enabling this should be done with care and the user is advised to add additional authentication authorization via a proxy to ensure only clients authorized to perform these actions can do so. For more information see https://prometheus.io/docs/prometheus/latest/querying/api/#tsdb-admin-apis",
           "type": "boolean"
         },
+        "enableFeatures": {
+          "description": "Enable access to Prometheus disabled features. By default, no features are enabled. Enabling disabled features is entirely outside the scope of what the maintainers will support and by doing so, you accept that this behaviour may break at any time without notice. For more information see https://prometheus.io/docs/prometheus/latest/disabled_features/",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "enforcedNamespaceLabel": {
           "description": "EnforcedNamespaceLabel enforces adding a namespace label of origin for each alert and metric that is user created. The label value will always be the namespace of the object that is being created.",
           "type": "string"
@@ -2140,8 +2180,17 @@
                               "type": "string"
                             },
                             "divisor": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
                               "description": "Specifies the output format of the exposed resources, defaults to \"1\"",
-                              "type": "string"
+                              "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                              "x-kubernetes-int-or-string": true
                             },
                             "resource": {
                               "description": "Required: resource to select",
@@ -2591,6 +2640,7 @@
                       "type": "string"
                     },
                     "protocol": {
+                      "default": "TCP",
                       "description": "Protocol for port. Must be UDP, TCP, or SCTP. Defaults to \"TCP\".",
                       "type": "string"
                     }
@@ -2600,7 +2650,12 @@
                   ],
                   "type": "object"
                 },
-                "type": "array"
+                "type": "array",
+                "x-kubernetes-list-map-keys": [
+                  "containerPort",
+                  "protocol"
+                ],
+                "x-kubernetes-list-type": "map"
               },
               "readinessProbe": {
                 "description": "Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes",
@@ -2731,14 +2786,32 @@
                 "properties": {
                   "limits": {
                     "additionalProperties": {
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
                     },
                     "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                     "type": "object"
                   },
                   "requests": {
                     "additionalProperties": {
-                      "type": "string"
+                      "anyOf": [
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ],
+                      "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                      "x-kubernetes-int-or-string": true
                     },
                     "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                     "type": "object"
@@ -3116,7 +3189,7 @@
           "type": "object"
         },
         "podMonitorNamespaceSelector": {
-          "description": "Namespaces to be selected for PodMonitor discovery. If nil, only check own namespace.",
+          "description": "Namespace's labels to match for PodMonitor discovery. If nil, only check own namespace.",
           "properties": {
             "matchExpressions": {
               "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
@@ -3399,7 +3472,7 @@
                 "type": "object"
               },
               "bearerToken": {
-                "description": "bearer token for remote read.",
+                "description": "Bearer token for remote read.",
                 "type": "string"
               },
               "bearerTokenFile": {
@@ -3638,12 +3711,33 @@
                 "type": "object"
               },
               "bearerToken": {
-                "description": "File to read bearer token for remote write.",
+                "description": "Bearer token for remote write.",
                 "type": "string"
               },
               "bearerTokenFile": {
                 "description": "File to read bearer token for remote write.",
                 "type": "string"
+              },
+              "headers": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Custom HTTP headers to be sent along with each remote write request. Be aware that headers that are set by Prometheus itself can't be overwritten. Only valid in Prometheus versions 2.25.0 and newer.",
+                "type": "object"
+              },
+              "metadataConfig": {
+                "description": "MetadataConfig configures the sending of series metadata to remote storage.",
+                "properties": {
+                  "send": {
+                    "description": "Whether metric metadata is sent to remote storage or not.",
+                    "type": "boolean"
+                  },
+                  "sendInterval": {
+                    "description": "How frequently metric metadata is sent to remote storage.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
               },
               "name": {
                 "description": "The name of the remote write queue, must be unique if specified. The name is used in metrics and logging in order to differentiate queues. Only valid in Prometheus versions 2.15.0 and newer.",
@@ -3906,14 +4000,32 @@
           "properties": {
             "limits": {
               "additionalProperties": {
-                "type": "string"
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                "x-kubernetes-int-or-string": true
               },
               "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
               "type": "object"
             },
             "requests": {
               "additionalProperties": {
-                "type": "string"
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                "x-kubernetes-int-or-string": true
               },
               "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
               "type": "object"
@@ -3926,7 +4038,7 @@
           "type": "string"
         },
         "retentionSize": {
-          "description": "Maximum amount of disk space used by blocks.",
+          "description": "Maximum amount of disk space used by blocks. Supported units: B, KB, MB, GB, TB, PB, EB. Ex: `512MB`.",
           "type": "string"
         },
         "routePrefix": {
@@ -4160,7 +4272,7 @@
           "type": "string"
         },
         "serviceMonitorNamespaceSelector": {
-          "description": "Namespaces to be selected for ServiceMonitor discovery. If nil, only check own namespace.",
+          "description": "Namespace's labels to match for ServiceMonitor discovery. If nil, only check own namespace.",
           "properties": {
             "matchExpressions": {
               "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
@@ -4267,8 +4379,17 @@
                   "type": "string"
                 },
                 "sizeLimit": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
                   "description": "Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir",
-                  "type": "string"
+                  "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                  "x-kubernetes-int-or-string": true
                 }
               },
               "type": "object"
@@ -4345,14 +4466,32 @@
                       "properties": {
                         "limits": {
                           "additionalProperties": {
-                            "type": "string"
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                            "x-kubernetes-int-or-string": true
                           },
                           "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                           "type": "object"
                         },
                         "requests": {
                           "additionalProperties": {
-                            "type": "string"
+                            "anyOf": [
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ],
+                            "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                            "x-kubernetes-int-or-string": true
                           },
                           "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                           "type": "object"
@@ -4429,7 +4568,16 @@
                     },
                     "capacity": {
                       "additionalProperties": {
-                        "type": "string"
+                        "anyOf": [
+                          {
+                            "type": "integer"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                        "x-kubernetes-int-or-string": true
                       },
                       "description": "Represents the actual resources of the underlying volume.",
                       "type": "object"
@@ -4690,14 +4838,32 @@
               "properties": {
                 "limits": {
                   "additionalProperties": {
-                    "type": "string"
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
                   },
                   "description": "Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                   "type": "object"
                 },
                 "requests": {
                   "additionalProperties": {
-                    "type": "string"
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
                   },
                   "description": "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/",
                   "type": "object"
@@ -4733,6 +4899,10 @@
                 "key"
               ],
               "type": "object"
+            },
+            "tracingConfigFile": {
+              "description": "TracingConfig specifies the path of the tracing configuration file. When used alongside with TracingConfig, TracingConfigFile takes precedence.",
+              "type": "string"
             },
             "version": {
               "description": "Version describes the version of Thanos to use.",
@@ -5175,8 +5345,17 @@
                               "type": "string"
                             },
                             "divisor": {
+                              "anyOf": [
+                                {
+                                  "type": "integer"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ],
                               "description": "Specifies the output format of the exposed resources, defaults to \"1\"",
-                              "type": "string"
+                              "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                              "x-kubernetes-int-or-string": true
                             },
                             "resource": {
                               "description": "Required: resource to select",
@@ -5207,8 +5386,17 @@
                     "type": "string"
                   },
                   "sizeLimit": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ],
                     "description": "Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir",
-                    "type": "string"
+                    "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                    "x-kubernetes-int-or-string": true
                   }
                 },
                 "type": "object"
@@ -5626,8 +5814,17 @@
                                         "type": "string"
                                       },
                                       "divisor": {
+                                        "anyOf": [
+                                          {
+                                            "type": "integer"
+                                          },
+                                          {
+                                            "type": "string"
+                                          }
+                                        ],
                                         "description": "Specifies the output format of the exposed resources, defaults to \"1\"",
-                                        "type": "string"
+                                        "pattern": "^(\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\\+|-)?(([0-9]+(\\.[0-9]*)?)|(\\.[0-9]+))))?$",
+                                        "x-kubernetes-int-or-string": true
                                       },
                                       "resource": {
                                         "description": "Required: resource to select",
