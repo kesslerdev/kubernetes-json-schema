@@ -42,7 +42,7 @@ function crd_to_json_schema() {
 }
 
 function write_schema() {
-  KUBE_VERSION=v1.6.4
+  KUBE_VERSION=v1.16.4
   sponge "$KUBE_VERSION-standalone/${1}"
   jq 'def strictify: . + if .type == "object" and has("properties") then {additionalProperties: false} + {properties: (({} + .properties) | map_values(strictify))} else null end; . * {properties: {spec: .properties.spec | strictify}}' "master-standalone/${1}" | sponge "$KUBE_VERSION-standalone-strict/${1}"
 }
