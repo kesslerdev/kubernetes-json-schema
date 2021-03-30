@@ -42,8 +42,9 @@ function crd_to_json_schema() {
 }
 
 function write_schema() {
-  sponge "master-standalone/${1}"
-  jq 'def strictify: . + if .type == "object" and has("properties") then {additionalProperties: false} + {properties: (({} + .properties) | map_values(strictify))} else null end; . * {properties: {spec: .properties.spec | strictify}}' "master-standalone/${1}" | sponge "master-standalone-strict/${1}"
+  KUBE_VERSION=v1.6.4
+  sponge "$KUBE_VERSION-standalone/${1}"
+  jq 'def strictify: . + if .type == "object" and has("properties") then {additionalProperties: false} + {properties: (({} + .properties) | map_values(strictify))} else null end; . * {properties: {spec: .properties.spec | strictify}}' "master-standalone/${1}" | sponge "$KUBE_VERSION-standalone-strict/${1}"
 }
 
 crd_to_json_schema argo-rollouts https://raw.githubusercontent.com/argoproj/argo-rollouts/stable/manifests/install.yaml
